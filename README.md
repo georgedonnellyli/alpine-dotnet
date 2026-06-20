@@ -12,6 +12,7 @@ An ASP.NET Core MVC dashboard demonstrating server-rendered Razor views with rea
 | Reactivity | Alpine.js 3 |
 | Charts | Chart.js 4 |
 | Styling | Bootstrap 5 + SCSS |
+| Frontend language | TypeScript |
 | Vite integration | Vite.AspNetCore 2.4.1 |
 
 ## Getting Started
@@ -62,7 +63,8 @@ ModernMvcApp/
 │       ├── _FormFields.cshtml     # Form inputs — injected into _FormComponent as IHtmlContent
 │       └── _ChartComponent.cshtml # Reusable Chart.js card
 └── FrontEnd/
-    ├── main.js                    # Alpine components: formComponent, setupChart
+    ├── main.ts                    # Alpine components: formComponent, setupChart
+    ├── env.d.ts                   # Vite client types (scss module shim)
     ├── site.scss                  # Global styles
     └── package.json
 ```
@@ -83,7 +85,7 @@ ModernMvcApp/
 
 ### Dynamic Field Discovery
 
-`formComponent` in `main.js` scans its DOM on `init()` for any `[x-model^="fields."]` elements and bootstrads `fields`, `touched`, and `errors` from those — no field names are hardcoded in the JS. Adding a new input to `_FormFields` with `x-model="fields.myField" required` is enough for it to be validated and submitted automatically.
+`formComponent` in `main.ts` scans its DOM on `init()` for any `[x-model^="fields."]` elements and bootstraps `fields`, `touched`, and `errors` from those — no field names are hardcoded in the TS. Adding a new input to `_FormFields` with `x-model="fields.myField" required` is enough for it to be validated and submitted automatically.
 
 ### Chart Component
 
