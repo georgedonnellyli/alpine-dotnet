@@ -1,0 +1,74 @@
+@model ModernMvcApp.Models.FormComponentViewModel
+
+<div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-outline-secondary btn-sm" @@click="loadData()">Load Data</button>
+</div>
+
+<div class="mb-3">
+    <label for="fc-name" class="form-label fw-semibold">Full Name</label>
+    <input id="fc-name"
+           type="text"
+           class="form-control"
+           :class="{ 'is-invalid': showError('name'), 'is-valid': touched.name && !errors.name }"
+           x-model="fields.name"
+           @@blur="touched.name = true"
+           placeholder="Jane Smith"
+           required />
+    <div class="invalid-feedback" x-text="errors.name"></div>
+</div>
+
+<div class="mb-3">
+    <label for="fc-email" class="form-label fw-semibold">Email Address</label>
+    <input id="fc-email"
+           type="email"
+           class="form-control"
+           :class="{ 'is-invalid': showError('email'), 'is-valid': touched.email && !errors.email }"
+           x-model="fields.email"
+           @@blur="touched.email = true"
+           placeholder="jane@example.com"
+           required />
+    <div class="invalid-feedback" x-text="errors.email"></div>
+</div>
+
+<div class="mb-3">
+    <label for="fc-phone" class="form-label fw-semibold">Phone Number</label>
+    <input id="fc-phone"
+           type="tel"
+           class="form-control"
+           :class="{ 'is-invalid': showError('phone'), 'is-valid': touched.phone && !errors.phone }"
+           x-model="fields.phone"
+           @@blur="touched.phone = true"
+           placeholder="+1 (555) 000-0000"
+           required />
+    <div class="invalid-feedback" x-text="errors.phone"></div>
+</div>
+
+<div class="mb-4">
+    <label for="fc-category" class="form-label fw-semibold">@Model.LookupLabel</label>
+    <select id="fc-category"
+            class="form-select"
+            :class="{ 'is-invalid': showError('category'), 'is-valid': touched.category && !errors.category }"
+            x-model="fields.category"
+            @@change="touched.category = true"
+            required>
+        <option value="">-- Select --</option>
+        <template x-for="opt in options" :key="opt.value">
+            <option :value="opt.value" x-text="opt.label"></option>
+        </template>
+    </select>
+    <div class="invalid-feedback" x-text="errors.category"></div>
+</div>
+
+<template x-if="questions.length > 0">
+    <div>
+        <hr class="my-4" />
+        <template x-for="(question, i) in questions" :key="i">
+            <div class="mb-3">
+                <label class="form-label fw-semibold" x-text="question.text"></label>
+                <input type="text" class="form-control" x-model="questions[i].answer" placeholder="Your answer..." />
+            </div>
+        </template>
+    </div>
+</template>
+
+<button type="submit" class="btn btn-primary w-100">@Model.SubmitLabel</button>

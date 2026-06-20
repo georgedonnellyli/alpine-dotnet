@@ -1,0 +1,12 @@
+// Override Bootstrap 6 defaults here
+$primary: #4f46e5; // Indigo custom color
+$enable-dark-mode: true;
+
+@import "bootstrap/scss/bootstrap";
+
+// Simple helper custom class
+.card-component {
+    box-shadow: var(--bs-box-shadow-sm);
+    border-radius: var(--bs-card-border-radius);
+    background-color: var(--bs-card-bg);
+}

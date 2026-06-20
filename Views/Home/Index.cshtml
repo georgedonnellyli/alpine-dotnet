@@ -1,0 +1,69 @@
+﻿@model ModernMvcApp.Models.DashboardViewModel
+
+<div class="row align-items-center mb-5" x-data="{ openWelcome: true }">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h1 class="display-5 fw-bold">Enterprise Hub</h1>
+        <button @@click="openWelcome = !openWelcome" class="btn btn-outline-secondary btn-sm">
+            Toggle Banner
+        </button>
+    </div>
+    
+    <div x-show="openWelcome" x-transition class="col-12 mt-3">
+        <div class="alert alert-primary" role="alert">
+            Welcome back! This system is running live hot-module reloaded SCSS, Alpine animations, and zero jQuery blocks.
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8 mx-auto">
+        <partial name="_ChartComponent" model='new ChartComponentViewModel {
+            Title = "H1 Business Scaling Metrics",
+            ChartType = "line",
+            Data = Model.SalesData,
+            Labels = Model.Months
+        }' />
+    </div>
+</div>
+<div class="row g-4">
+    <div class="col-md-8 mx-auto">
+        <partial name="_ChartComponent" model='new ChartComponentViewModel {
+            Title = "Q1 Revenue",
+            ChartType = "line",
+            Data = new int[] { 1200, 2900, 3400 },
+            Labels = new string[] { "Jan", "Feb", "Mar" }
+        }' />
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8 mx-auto">
+        <partial name="_ChartComponent" model='new ChartComponentViewModel {
+            Title = "New User Signups",
+            ChartType = "bar",
+            Data = new int[] { 150, 430, 210, 600 },
+            Labels = new string[] { "North", "South", "East", "West" }
+        }' />
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 mx-auto">
+        @{
+            var formModel = new FormComponentViewModel
+            {
+                Title = "Get in Touch",
+                SubmitLabel = "Send Message",
+                LookupLabel = "Department",
+                LookupOptions =
+                [
+                    new LookupOption { Value = "sales", Label = "Sales" },
+                    new LookupOption { Value = "support", Label = "Support" },
+                    new LookupOption { Value = "billing", Label = "Billing" }
+                ]
+            };
+            formModel.Fields = await Html.PartialAsync("_FormFields", formModel);
+        }
+        @await Html.PartialAsync("_FormComponent", formModel)
+    </div>
+</div>

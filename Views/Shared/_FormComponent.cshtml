@@ -1,0 +1,22 @@
+@model ModernMvcApp.Models.FormComponentViewModel
+@{
+    var optionsJson = System.Text.Json.JsonSerializer.Serialize(
+        Model.LookupOptions,
+        new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }
+    );
+}
+<div class="card-component p-4"
+     data-options="@optionsJson"
+     x-data="formComponent(JSON.parse($el.dataset.options))">
+
+    <h5 class="card-title text-secondary mb-4">@Model.Title</h5>
+
+    <div x-show="success" x-transition class="alert alert-success mb-4" role="alert">
+        Form submitted successfully!
+    </div>
+
+    <form x-show="!success" novalidate x-on:submit.prevent="submit()">
+        @Html.AntiForgeryToken()
+        @Model.Fields
+    </form>
+</div>

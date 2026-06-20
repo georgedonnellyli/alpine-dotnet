@@ -1,0 +1,8 @@
+@model ModernMvcApp.Models.ChartComponentViewModel
+
+<div x-data='setupChart(@Json.Serialize(Model.Data), @Json.Serialize(Model.Labels), "@Model.ChartType")' class="card-component p-4">
+    <h5 class="card-title text-secondary mb-3">@Model.Title</h5>
+    <div style="position: relative; height: 300px;">
+        <canvas x-ref="canvas"></canvas>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@using Vite.AspNetCore
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern MVC App</title>
+    
+    <link rel="stylesheet" vite-href="~/site.scss" />
+</head>
+<body class="bg-light">
+
+    <main class="container py-5">
+        @RenderBody()
+    </main>
+
+    <script type="module" vite-src="~/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
