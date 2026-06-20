@@ -3,7 +3,9 @@
     "allow": [
       "Bash(curl -s http://localhost:5000/)",
       "PowerShell(netstat *)",
-      "Bash(curl -s http://localhost:5028/)"
+      "Bash(curl -s http://localhost:5028/)",
+      "Bash(npm install *)",
+      "Bash(Remove-Item *)"
     ]
   }
 }

@@ -8,7 +8,7 @@ export default defineConfig({
     emptyOutDir: true,
     manifest: true,
     rollupOptions: {
-      input: 'Frontend/main.js'
+      input: 'Frontend/main.ts'
     }
   },
   server: {
