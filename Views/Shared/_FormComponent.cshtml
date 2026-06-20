@@ -7,6 +7,8 @@
 }
 <div class="card-component p-4"
      data-options="@optionsJson"
+     data-load-url="@Model.LoadUrl"
+     data-submit-url="@Model.SubmitUrl"
      x-data="formComponent(JSON.parse($el.dataset.options))">
 
     <h5 class="card-title text-secondary mb-4">@Model.Title</h5>

@@ -37,6 +37,8 @@ public class FormComponentViewModel
     public string SubmitLabel { get; set; } = "Submit";
     public LookupOption[] LookupOptions { get; set; } = [];
     public string LookupLabel { get; set; } = "Category";
+    public string LoadUrl { get; set; } = string.Empty;
+    public string SubmitUrl { get; set; } = string.Empty;
     public IHtmlContent? Fields { get; set; }
 }
 

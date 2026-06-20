@@ -1,6 +1,6 @@
 @model ModernMvcApp.Models.FormComponentViewModel
 
-<div class="d-flex justify-content-end mb-3">
+<div class="d-flex justify-content-end mb-3" x-show="loadUrl">
     <button type="button" class="btn btn-outline-secondary btn-sm" @@click="loadData()">Load Data</button>
 </div>
 
@@ -59,13 +59,13 @@
     <div class="invalid-feedback" x-text="errors.category"></div>
 </div>
 
-<template x-if="questions.length > 0">
+<template data-list="questions" x-if="lists.questions.length > 0">
     <div>
         <hr class="my-4" />
-        <template x-for="(question, i) in questions" :key="i">
+        <template x-for="(question, i) in lists.questions" :key="i">
             <div class="mb-3">
                 <label class="form-label fw-semibold" x-text="question.text"></label>
-                <input type="text" class="form-control" x-model="questions[i].answer" placeholder="Your answer..." />
+                <input type="text" class="form-control" x-model="lists.questions[i].answer" placeholder="Your answer..." />
             </div>
         </template>
     </div>

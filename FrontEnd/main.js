@@ -36,15 +36,22 @@ window.formComponent = function (options) {
         fields: {},
         touched: {},
         errors: {},
-        questions: [],
+        lists: {},
+        loadUrl: '',
+        submitUrl: '',
         success: false,
         init() {
+            this.loadUrl = this.$el.dataset.loadUrl ?? '';
+            this.submitUrl = this.$el.dataset.submitUrl ?? '';
             this.$el.querySelectorAll('[x-model^="fields."]').forEach(el => {
                 const key = el.getAttribute('x-model').slice('fields.'.length);
                 this.fields[key] = '';
                 this.touched[key] = false;
                 this.errors[key] = '';
                 this.$watch(`fields.${key}`, () => this.validate());
+            });
+            this.$el.querySelectorAll('[data-list]').forEach(el => {
+                this.lists[el.getAttribute('data-list')] = [];
             });
         },
         validate() {
@@ -65,13 +72,14 @@ window.formComponent = function (options) {
             return this.touched[field] && !!this.errors[field];
         },
         async loadData() {
-            const res = await fetch('/Home/LoadFormData');
+            if (!this.loadUrl) return;
+            const res = await fetch(this.loadUrl);
             if (!res.ok) return;
-            const { questions, ...fieldData } = await res.json();
-            Object.keys(fieldData).forEach(key => {
-                if (key in this.fields) this.fields[key] = fieldData[key];
+            const data = await res.json();
+            Object.entries(data).forEach(([key, value]) => {
+                if (Array.isArray(value) && key in this.lists) this.lists[key] = value;
+                else if (!Array.isArray(value) && key in this.fields) this.fields[key] = value;
             });
-            this.questions = questions ?? [];
         },
         async submit() {
             Object.keys(this.touched).forEach(k => this.touched[k] = true);
@@ -81,7 +89,7 @@ window.formComponent = function (options) {
             const token = document.querySelector('[name=__RequestVerificationToken]')?.value ?? '';
             const body = new URLSearchParams({ ...this.fields, __RequestVerificationToken: token });
 
-            const res = await fetch('/Home/SubmitForm', {
+            const res = await fetch(this.submitUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: body.toString()
